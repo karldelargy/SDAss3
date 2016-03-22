@@ -107,6 +107,48 @@ def Digit (pO, money, attack):
     #sleep(0.5)
     return (pO, money, attack)
 
+def endTurn (pO):
+    if (len(pO['hand']) >0 ):
+        for x in range(0, len(pO['hand'])):
+            pO['discard'].append(pO['hand'].pop())
+
+
+    if (len(pO['active']) >0 ):
+        for x in range(0, len(pO['active'])):
+            pO['discard'].append(pO['active'].pop())
+    for x in range(0, pO['handsize']):
+        if len(pO['deck']) == 0:
+            random.shuffle(pO['discard'])
+            pO['deck'] = pO['discard']
+            pO['discard'] = []
+        card = pO['deck'].pop()
+        pO['hand'].append(card)
+    
+    return (pO)
+
+def Attack (pC, attack):
+    pC['health'] = pC['health'] - attack
+    attack = 0
+    
+    return (pC, attack)
+
+def Quit():
+	print "Exiting game..."
+	exit()
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     pO = {'name': 'player one', 'health': 30, 'deck': None, 'hand': None, 'active': None, 'handsize': 5,
                  'discard': None}
@@ -207,8 +249,7 @@ if __name__ == '__main__':
             print act
             
             if act == 'Q':
-            	print "Exiting game..."
-            	exit()
+				Quit()
             
             if act == 'P':
                 money, attack, pO = playAll(money, attack, pO)        #updated    ########   everything it needs
@@ -216,37 +257,16 @@ if __name__ == '__main__':
             if act.isdigit():
             	pO, money, attack = Digit(pO, money, attack)
 
-
-
-
-
-
-
-
             if (act == 'B'):
             	money, central, pO = Buy(money, central, pO)
 
-
             if act == 'A':
-                pC['health'] = pC['health'] - attack
-                attack = 0
+				pC, attack=Attack(pC, attack)
+
             if act == 'E':
-                if (len(pO['hand']) >0 ):
-                    for x in range(0, len(pO['hand'])):
-                        pO['discard'].append(pO['hand'].pop())
+            	pO=endTurn(pO)
+            	break
 
-
-                if (len(pO['active']) >0 ):
-                    for x in range(0, len(pO['active'])):
-                        pO['discard'].append(pO['active'].pop())
-                for x in range(0, pO['handsize']):
-                    if len(pO['deck']) == 0:
-                        random.shuffle(pO['discard'])
-                        pO['deck'] = pO['discard']
-                        pO['discard'] = []
-                    card = pO['deck'].pop()
-                    pO['hand'].append(card)
-                break
 
         print "Available Cards"
         for card in central['active']:
@@ -430,11 +450,15 @@ if __name__ == '__main__':
                     print "Draw"
             cG = False
         if not cG:
+        
+        
             pG = raw_input("\nDo you want to play another game?:")
             cG = (pG=='Y')
             if cG:
                 oT = raw_input("Do you want an aggressive (A) opponent or an acquisative (Q) opponent")
                 aggressive = (oT=='A')
+                
+                
                 pO = {'name': 'player one', 'health': 30, 'deck': None, 'hand': None, 'active': None,
                              'handsize': 5,
                              'discard': None}
