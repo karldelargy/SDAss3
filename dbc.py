@@ -14,6 +14,30 @@ class Card(object):
             return self.values[1]
 
 
+def playAll(money, attack, pO): #this is everything it needs
+	if(len(pO['hand'])>0):
+		for x in range(0, len(pO['hand'])):
+		    card = pO['hand'].pop()
+		    pO['active'].append(card)
+		    money = money + card.get_money()
+		    attack = attack + card.get_attack()
+
+	print "\nYour Hand"
+	index = 0
+	for card in pO['hand']:
+		print "[%s] %s" % (index, card)
+		index = index + 1
+
+	print "\nYour Active Cards"
+	for card in pO['active']:
+		print card
+	print "\nYour Values"
+	print "Money %s, Attack %s" % (money, attack)
+
+	return (money,attack, pO)  ##this is whats updated
+
+
+
 if __name__ == '__main__':
     pO = {'name': 'player one', 'health': 30, 'deck': None, 'hand': None, 'active': None, 'handsize': 5,
                  'discard': None}
@@ -118,24 +142,8 @@ if __name__ == '__main__':
             	exit()
             
             if act == 'P':
-                if(len(pO['hand'])>0):
-                    for x in range(0, len(pO['hand'])):
-                        card = pO['hand'].pop()
-                        pO['active'].append(card)
-                        money = money + card.get_money()
-                        attack = attack + card.get_attack()
-
-                print "\nYour Hand"
-                index = 0
-                for card in pO['hand']:
-                    print "[%s] %s" % (index, card)
-                    index = index + 1
-
-                print "\nYour Active Cards"
-                for card in pO['active']:
-                    print card
-                print "\nYour Values"
-                print "Money %s, Attack %s" % (money, attack)
+                money, attack, pO = playAll(money, attack, pO)        #updated    ########   everything it needs
+                
             if act.isdigit():
                 if( int(act) < len(pO['hand'])):
                     pO['active'].append(pO['hand'].pop(int(act)))
@@ -258,7 +266,7 @@ if __name__ == '__main__':
         if money > 0:
             cb = True
             templist = []
-            print "Starting Money %s and cb %s " % (money, cb)
+            print "Starting Money %s " % (money)
             sleep(0.5)
             while cb:
                 templist = []
