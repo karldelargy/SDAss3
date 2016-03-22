@@ -1,5 +1,5 @@
 import itertools, random
-from time import sleep              #sleep(0.5) = half second
+from time import sleep              ##sleep(0.5) = half second
 
 class Card(object):
     def __init__(self, name, values=(0, 0), cost=1):
@@ -36,7 +36,76 @@ def playAll(money, attack, pO): #this is everything it needs
 
 	return (money,attack, pO)  ##this is whats updated
 
+def Buy(money, central, pO):
 
+    notending = True
+    while money > 0:
+        print "Available Cards"
+        ind = 0
+        for card in central['active']:
+            print "[%s] %s" % (ind,card)
+            ind = ind + 1
+        print "Choose a card to buy [0-n], S for supplement, E to end buying, Q to quit the game"
+        print "Remaining money %s" % (money)
+        bv = raw_input("Choose option: ")
+        
+        if bv == 'Q':
+        	print "Exiting game..."
+        	exit()
+        
+        if bv == 'S':
+            if len(central['supplement']) > 0:
+                if money >= central['supplement'][0].cost:
+                    money = money - central['supplement'][0].cost
+                    pO['discard'].append(central['supplement'].pop())
+                    print "Supplement Bought"
+                else:
+                    print "insufficient money to buy"
+            else:
+                print "no supplements left"
+        elif bv == 'E':
+            notending = False
+            break;
+        elif bv.isdigit():
+            if int(bv) < len(central['active']):
+                 if money >= central['active'][int(bv)].cost:
+                    money = money - central['active'][int(bv)].cost
+                    pO['discard'].append(central['active'].pop(int(bv)))
+                    if( len(central['deck']) > 0):
+                        card = central['deck'].pop()
+                        central['active'].append(card)
+                    else:
+                        central['activeSize'] = central['activeSize'] - 1
+                    print "Card bought"
+                 else:
+                    print "insufficient money to buy"
+            else:
+                 print "enter a valid index number"
+        else:
+            print "Enter a valid option"
+    return (money, central, pO)
+
+def Digit (pO, money, attack):
+    if( int(act) < len(pO['hand'])):
+        pO['active'].append(pO['hand'].pop(int(act)))
+        money = money + pO['active'][-1].get_money()
+        attack = attack + pO['active'][-1].get_attack()    
+        
+    print "\nYour Hand"
+    index = 0
+    for card in pO['hand']:
+        print "[%s] %s" % (index, card)
+        #sleep(0.5)
+        index = index + 1
+
+    print "\nYour Active Cards"
+    for card in pO['active']:
+        print card
+        #sleep(0.5)
+    print "\nYour Values"
+    print "Money %s, Attack %s" % (money, attack)
+    #sleep(0.5)
+    return (pO, money, attack)
 
 if __name__ == '__main__':
     pO = {'name': 'player one', 'health': 30, 'deck': None, 'hand': None, 'active': None, 'handsize': 5,
@@ -94,13 +163,13 @@ if __name__ == '__main__':
         pC['hand'].append(card)
 
     print "Available Cards"
-    sleep(0.5)
+    #sleep(0.5)
     for card in central['active']:
         print card
-        sleep(0.5)
+        #sleep(0.5)
 
     print "Supplement"
-    sleep(0.5)
+    #sleep(0.5)
     if len(central['supplement']) > 0:
         print central['supplement'][0]
 
@@ -127,11 +196,11 @@ if __name__ == '__main__':
             index = 0
             for card in pO['hand']:
                     print "[%s] %s" % (index, card)
-                    sleep(0.5)
+                    #sleep(0.5)
                     index = index + 1
             print "\nYour Values"
             print "Money %s, Attack %s" % (money, attack)
-            sleep(0.5)
+            #sleep(0.5)
             print "\nChoose Action: (P = play all, [0-n] = play that card, B = Buy Card, A = Attack, E = end turn, Q = Quit game)"
 
             act = raw_input("Enter Action: ")
@@ -145,72 +214,17 @@ if __name__ == '__main__':
                 money, attack, pO = playAll(money, attack, pO)        #updated    ########   everything it needs
                 
             if act.isdigit():
-                if( int(act) < len(pO['hand'])):
-                    pO['active'].append(pO['hand'].pop(int(act)))
-                    money = money + pO['active'][-1].get_money()
-                    attack = attack + pO['active'][-1].get_attack()    
-                    
-                print "\nYour Hand"
-                index = 0
-                for card in pO['hand']:
-                    print "[%s] %s" % (index, card)
-                    sleep(0.5)
-                    index = index + 1
+            	pO, money, attack = Digit(pO, money, attack)
 
-                print "\nYour Active Cards"
-                for card in pO['active']:
-                    print card
-                    sleep(0.5)
-                print "\nYour Values"
-                print "Money %s, Attack %s" % (money, attack)
-                sleep(0.5)
+
+
+
+
+
+
+
             if (act == 'B'):
-
-                notending = True
-                while money > 0:
-                    print "Available Cards"
-                    ind = 0
-                    for card in central['active']:
-                        print "[%s] %s" % (ind,card)
-                        ind = ind + 1
-                    print "Choose a card to buy [0-n], S for supplement, E to end buying, Q to quit the game"
-                    print "Remaining money %s" % (money)
-                    bv = raw_input("Choose option: ")
-                    
-                    if bv == 'Q':
-                    	print "Exiting game..."
-                    	exit()
-                    
-                    if bv == 'S':
-                        if len(central['supplement']) > 0:
-                            if money >= central['supplement'][0].cost:
-                                money = money - central['supplement'][0].cost
-                                pO['discard'].append(central['supplement'].pop())
-                                print "Supplement Bought"
-                            else:
-                                print "insufficient money to buy"
-                        else:
-                            print "no supplements left"
-                    elif bv == 'E':
-                        notending = False
-                        break;
-                    elif bv.isdigit():
-                        if int(bv) < len(central['active']):
-                             if money >= central['active'][int(bv)].cost:
-                                money = money - central['active'][int(bv)].cost
-                                pO['discard'].append(central['active'].pop(int(bv)))
-                                if( len(central['deck']) > 0):
-                                    card = central['deck'].pop()
-                                    central['active'].append(card)
-                                else:
-                                    central['activeSize'] = central['activeSize'] - 1
-                                print "Card bought"
-                             else:
-                                print "insufficient money to buy"
-                        else:
-                             print "enter a valid index number"
-                    else:
-                        print "Enter a valid option"
+            	money, central, pO = Buy(money, central, pO)
 
 
             if act == 'A':
@@ -259,15 +273,15 @@ if __name__ == '__main__':
         attack = 0
         print "\nPlayer Health %s" % pO['health']
         print "Computer Health %s" % pC['health']
-        sleep(0.5)
+        #sleep(0.5)
         print " Computer player values attack %s, money %s" % (attack, money)
         print "Computer buying"
-        sleep(0.5)
+        #sleep(0.5)
         if money > 0:
             cb = True
             templist = []
             print "Starting Money %s " % (money)
-            sleep(0.5)
+            #sleep(0.5)
             while cb:
                 templist = []
                 if len(central['supplement']) > 0:
@@ -294,7 +308,7 @@ if __name__ == '__main__':
                             money = money - central['active'][int(source)].cost
                             card = central['active'].pop(int(source))
                             print "Card bought %s" % card
-                            sleep(0.5)
+                            #sleep(0.5)
                             pC['discard'].append(card)
                             
                             if( len(central['deck']) > 0):
@@ -304,7 +318,7 @@ if __name__ == '__main__':
                                 central['activeSize'] = central['activeSize'] - 1
                         else:
                             print "Error Occurred"
-                            sleep(0.5)
+                            #sleep(0.5)
                     else:
                         if money >= central['supplement'][0].cost:
                             money = money - central['supplement'][0].cost
@@ -312,17 +326,17 @@ if __name__ == '__main__':
                             pC['discard'].append(card)
                             
                             print "Supplement Bought %s. Remaining money %s" % (card, money)
-                            sleep(0.5)
+                            #sleep(0.5)
                         else:
                             print "Error Occurred"
-                            sleep(0.5)
+                            #sleep(0.5)
                 else:
                     cb = False
                 if money == 0:
                     cb = False
         else:
             print "No Money to buy anything"
-            sleep(0.5)
+            #sleep(0.5)
 
         if (len(pC['hand']) >0 ):
             for x in range(0, len(pC['hand'])):
@@ -338,33 +352,33 @@ if __name__ == '__main__':
                     card = pC['deck'].pop()
                     pC['hand'].append(card)
         print "Computer turn ending"
-        sleep(0.5)
+        #sleep(0.5)
 
 
         print "Available Cards"
-        sleep(0.5)
+        #sleep(0.5)
         for card in central['active']:
             print card
 
         print "Supplement"
         if len(central['supplement']) > 0:
             print central['supplement'][0]
-            sleep(0.5)
+            #sleep(0.5)
 
         print "\nPlayer Health %s" % pO['health']
         print "Computer Health %s" % pC['health']
-        sleep(0.5)
+        #sleep(0.5)
 
         if pO['health'] <= 0:
             cG = False
             print "Computer wins"
-            sleep(0.5)
+            #sleep(0.5)
         elif pC['health'] <= 0:
             cG = False
             print 'Player One  '
         elif central['activeSize'] == 0:
             print "No more cards available"
-            sleep(0.5)
+            #sleep(0.5)
             if pO['health'] > pC['health']:
                 print "Player One Wins on Health"
             elif pC['health'] > pO['health']:
