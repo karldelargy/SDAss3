@@ -1,4 +1,5 @@
 from time import sleep   
+import itertools, random
 
 def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressive):
     for x in range(0, len(playerComputer['hand'])):
@@ -13,15 +14,15 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
     attack = 0
     print "\nPlayer Health %s" % playerOne['health']
     print "Computer Health %s" % playerComputer['health']
-    sleep(0.5)
+    #sleep(0.5)
     print " Computer player values attack %s, money %s" % (attack, money)
     print "Computer buying"
-    sleep(0.5)
+    #sleep(0.5)
     if money > 0:
         cb = True
         templist = []
         print "Starting Money %s " % (money)
-        sleep(0.5)
+        #sleep(0.5)
         while cb:
             templist = []
             if len(centralLine['supplement']) > 0:
@@ -48,7 +49,7 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                         money = money - centralLine['active'][int(source)].cost
                         card = centralLine['active'].pop(int(source))
                         print "Card bought %s" % card
-                        sleep(0.5)
+                        #sleep(0.5)
                         playerComputer['discard'].append(card)
                         
                         if( len(centralLine['deck']) > 0):
@@ -58,7 +59,7 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                             centralLine['activeSize'] = centralLine['activeSize'] - 1
                     else:
                         print "Error Occurred"
-                        sleep(0.5)
+                        #sleep(0.5)
                 else:
                     if money >= centralLine['supplement'][0].cost:
                         money = money - centralLine['supplement'][0].cost
@@ -66,15 +67,31 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                         playerComputer['discard'].append(card)
                         
                         print "Supplement Bought %s. Remaining money %s" % (card, money)
-                        sleep(0.5)
+                        #sleep(0.5)
                     else:
                         print "Error Occurred"
-                        sleep(0.5)
+                        #sleep(0.5)
             else:
                 cb = False
             if money == 0:
                 cb = False
     else:
         print "No Money to buy anything"
-        sleep(0.5)
+        #sleep(0.5)
+        
+    if (len(playerComputer['hand']) >0 ):
+        for x in range(0, len(playerComputer['hand'])):
+            playerComputer['discard'].append(playerComputer['hand'].pop())
+    if (len(playerComputer['active']) >0 ):
+        for x in range(0, len(playerComputer['active'])):
+            playerComputer['discard'].append(playerComputer['active'].pop())
+    for x in range(0, playerComputer['handsize']):
+                if len(playerComputer['deck']) == 0:
+                    random.shuffle(playerComputer['discard'])
+                    playerComputer['deck'] = playerComputer['discard']
+                    playerComputer['discard'] = []
+                card = playerComputer['deck'].pop()
+                playerComputer['hand'].append(card)
+    print "Computer turn ending"
+    #sleep(0.5)
     return(money, attack, playerOne, playerComputer, centralLine)

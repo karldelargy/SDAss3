@@ -20,5 +20,5 @@ def Digit (playerOne, money, attack, act):
         sleep(0.5)
     print "\nYour Values"
     print "Money %s, Attack %s" % (money, attack)
-    sleep(0.5)
+    sleep(0.1)
     return (playerOne, money, attack)

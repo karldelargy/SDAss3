@@ -8,7 +8,4 @@ def Shuffle(playerOne):
         playerOne['hand'].append(card)
     return (playerOne)
 
-def healthUpddate():
-    print "\nPlayer Health %s" % playerOne['health']
-    print "Computer Health %s" % playerComputer['health']
-    return()
+
