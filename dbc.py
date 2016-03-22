@@ -362,8 +362,44 @@ if __name__ == '__main__':
             elif pC['health'] > pO['health']:
                 print "Computer Wins"
             else:
-                pHT = 0
-                pCT = 0
+            ########################################################################
+            	
+            	for x in range(0, len(pO['hand'])):
+                    card = pO['hand'].pop()
+                    pO['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                for x in range(0, len(pO['deck'])):
+                    card = pO['deck'].pop()
+                    pO['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                for x in range(0, len(pO['discard'])):
+                    card = pO['discard'].pop()
+                    pO['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                pHT = money + attack
+                money=0
+                attack=0
+                
+                for x in range(0, len(pC['hand'])):
+                    card = pC['hand'].pop()
+                    pC['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                for x in range(0, len(pC['deck'])):
+                    card = pC['deck'].pop()
+                    pC['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                for x in range(0, len(pO['discard'])):
+                    card = pC['discard'].pop()
+                    pC['active'].append(card)
+                    money = money + card.get_money()
+                    attack = attack + card.get_attack()
+                pCT = money + attack
+                
                 if pHT > pCT:
                     print "Player One Wins on Card Strength"
                 elif pCT > pHT:
