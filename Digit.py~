@@ -1,3 +1,8 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
 from Act import *
 from time import sleep   
 
@@ -19,6 +24,6 @@ def Digit (playerOne, money, attack, act): #selects the cards you chose by index
         print card
         sleep(0.5)
     print "\nYour Values"
-    print "Money %s, Attack %s" % (money, attack)
+    print "Money %s, Attack %s" % (money, attack) #shows you where you stand in terms of attributes
     sleep(0.1)
     return (playerOne, money, attack)

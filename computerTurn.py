@@ -1,3 +1,8 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
 from time import sleep    #contains the entire turn of the computer
 import itertools, random
 
@@ -14,15 +19,15 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
     attack = 0
     print "\nPlayer Health %s" % playerOne['health']
     print "Computer Health %s" % playerComputer['health']
-    sleep(0.5)
+    sleep(0.2)
     print " Computer player values attack %s, money %s" % (attack, money)
     print "Computer buying"
-    sleep(0.5)
+    sleep(0.2)
     if money > 0:  #deciding 
         cb = True
         templist = []
         print "Starting Money %s " % (money)
-        sleep(0.5)
+        sleep(0.2)
         while cb:
             templist = []
             if len(centralLine['supplement']) > 0:
@@ -49,7 +54,7 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                         money = money - centralLine['active'][int(source)].cost  #updating money after purchases
                         card = centralLine['active'].pop(int(source)) #takes cards from central line
                         print "Card bought %s" % card
-                        sleep(0.5)
+                        sleep(0.2)
                         playerComputer['discard'].append(card)
                         
                         if( len(centralLine['deck']) > 0):
@@ -59,7 +64,7 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                             centralLine['activeSize'] = centralLine['activeSize'] - 1 #reduces size of central line
                     else:
                         print "Error Occurred"
-                        sleep(0.5)
+                        sleep(0.2)
                 else:
                     if money >= centralLine['supplement'][0].cost:
                         money = money - centralLine['supplement'][0].cost  #uppdates money
@@ -67,17 +72,17 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                         playerComputer['discard'].append(card) #moves card to discard pile
                         
                         print "Supplement Bought %s. Remaining money %s" % (card, money) 
-                        sleep(0.5)
+                        sleep(0.2)
                     else:
                         print "Error Occurred"
-                        sleep(0.5)
+                        sleep(0.2)
             else:
                 cb = False
             if money == 0:
                 cb = False
     else:
         print "No Money to buy anything"
-        sleep(0.5)
+        sleep(0.2)
         
     if (len(playerComputer['hand']) >0 ):
         for x in range(0, len(playerComputer['hand'])):
@@ -93,5 +98,5 @@ def computerTurn(money, attack, playerOne, playerComputer, centralLine, aggressi
                 card = playerComputer['deck'].pop() #gives card to player from shuffled deck into hand
                 playerComputer['hand'].append(card)
     print "Computer turn ending"
-    sleep(0.5)
+    sleep(0.2)
     return(money, attack, playerOne, playerComputer, centralLine)

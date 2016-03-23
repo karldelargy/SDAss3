@@ -1,3 +1,8 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
 def handStrength(playerOne): #sums your attributes
     for x in range(0, len(playerOne['hand'])):
         card = playerOne['hand'].pop()

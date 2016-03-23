@@ -1,4 +1,4 @@
-def handStrength(playerOne):
+def handStrength(playerOne): #sums your attributes
     for x in range(0, len(playerOne['hand'])):
         card = playerOne['hand'].pop()
         playerOne['active'].append(card)

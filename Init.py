@@ -1,3 +1,8 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
 from Card import *   #initilises the game deck, hands, cards, attributes etc
 import itertools, random
 from time import sleep   

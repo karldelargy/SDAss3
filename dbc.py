@@ -1,5 +1,11 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
+
 import itertools, random
-from time import sleep              #sleep(0.5) = half second  #from ,file> import *
+from time import sleep              #sleep(0.2) = half second  #from ,file> import *
 from playAll import *
 from Quit import *
 from Buy import *
@@ -48,11 +54,11 @@ if __name__ == '__main__':
             index = 0
             for card in playerOne['hand']:
                     print "[%s] %s" % (index, card)
-                    sleep(0.5)
+                    sleep(0.2)
                     index = index + 1
             print "\nYour Values"
             print "Money %s, Attack %s" % (money, attack)
-            sleep(0.5)
+            sleep(0.2)
             print "\nChoose Action: (P = play all, [0-n] = play that card, B = Buy Card, A = Attack, E = end turn, Q = Quit game)"
 
 
@@ -92,7 +98,7 @@ if __name__ == '__main__':
         Available(centralLine)
 
         healthUpddate(playerOne,playerComputer)
-        sleep(0.5)
+        sleep(0.2)
 
         createGame=gameDecision(playerOne, playerComputer, centralLine,createGame)  #decides if there is a winner yet/the game ends
 

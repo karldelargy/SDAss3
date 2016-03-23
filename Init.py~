@@ -1,10 +1,10 @@
-from Card import * 
+from Card import *   #initilises the game deck, hands, cards, attributes etc
 import itertools, random
 from time import sleep   
 
 def Init():
     playerOne = {'name': 'player one', 'health': 30, 'deck': None, 'hand': None, 'active': None, 'handsize': 5,
-                 'discard': None}
+                 'discard': None} #defining stats for players
     playerComputer = {'name': 'player computer', 'health': 30, 'deck': None, 'hand': None, 'active': None, 'handsize': 5,
                'discard': None}
     centralLine = {'name': 'centralLine', 'active': None, 'activeSize': 5, 'supplement': None, 'deck': None}
@@ -18,7 +18,7 @@ def Init():
     playerOne['discard'] = []
     playerOne['active'] = []
     playertwodeck = [
-            8 * [Card('Serf', (0, 1), 0)],
+            8 * [Card('Serf', (0, 1), 0)], #staring hand for both
         2 * [Card('Squire', (1, 0), 0)]
     ]
     ptd = list(itertools.chain.from_iterable(playertwodeck))
@@ -27,7 +27,7 @@ def Init():
     playerComputer['discard'] = []
     playerComputer['active'] = []
 
-    supplement = 10 * [Card('Levy', (1, 2), 2)]
+    supplement = 10 * [Card('Levy', (1, 2), 2)] #defines suppliment cards
     deck = list(itertools.chain.from_iterable(sdc))
     random.shuffle(deck)
     centralLine['deck'] = deck

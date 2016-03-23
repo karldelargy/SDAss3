@@ -1,3 +1,8 @@
+####################################################################################
+
+#Exam number B083194
+
+####################################################################################
 from time import sleep   
 def playAll(money, attack, playerOne): #this is everything it needs #plays all the cards in your hand
 	if(len(playerOne['hand'])>0):
