@@ -25,16 +25,16 @@ from centralMake import *
 
 if __name__ == '__main__':
 
-    playerOne, playerComputer, centralLine=Init()	
+    playerOne, playerComputer, centralLine=Init()	#initialisations
 	
 
-    centrralLine=centralMake(centralLine)
+    centrralLine=centralMake(centralLine)  #makes central line
 
-    playerOne=Shuffle(playerOne)
+    playerOne=Shuffle(playerOne) #shuffles player 1s cards
     playerComputer=Shuffle(playerComputer)
     Available(centralLine)
 
-    playGame, createGame, aggressive=playNow()
+    playGame, createGame, aggressive=playNow() #begins the game after initialisations
 
 
     	
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         while True:
             healthUpddate(playerOne,playerComputer)
             
-            print "\nYour Hand"
+            print "\nYour Hand" #presents options to player
             index = 0
             for card in playerOne['hand']:
                     print "[%s] %s" % (index, card)
@@ -56,11 +56,11 @@ if __name__ == '__main__':
             print "\nChoose Action: (P = play all, [0-n] = play that card, B = Buy Card, A = Attack, E = end turn, Q = Quit game)"
 
 
-            act = Act()
+            act = Act() #gets input
                 
             print act
             
-            if act == 'Q':
+            if act == 'Q':  #different options of the act, they are self documenting
 				Quit()
             
             if act == 'P':
@@ -86,7 +86,7 @@ if __name__ == '__main__':
         money = 0
         attack = 0
         
-        money, attack, playerOne, playerComputer, centralLine=computerTurn(money, attack, playerOne, playerComputer, centralLine,aggressive)
+        money, attack, playerOne, playerComputer, centralLine=computerTurn(money, attack, playerOne, playerComputer, centralLine,aggressive) # computers turn
 
 
         Available(centralLine)
@@ -94,9 +94,9 @@ if __name__ == '__main__':
         healthUpddate(playerOne,playerComputer)
         sleep(0.5)
 
-        createGame=gameDecision(playerOne, playerComputer, centralLine,createGame)
+        createGame=gameDecision(playerOne, playerComputer, centralLine,createGame)  #decides if there is a winner yet/the game ends
 
         if not createGame:
-            aggressive,createGame, playGame, centralLine, playerOne, playerComputer=playAgain(createGame, playGame, centralLine)
+            aggressive,createGame, playGame, centralLine, playerOne, playerComputer=playAgain(createGame, playGame, centralLine) #asks if you want to play again
             
     exit()

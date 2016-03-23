@@ -1,4 +1,4 @@
-from time import sleep    #works out the effects of attack in terms of change of health
+from time import sleep   
 def Attack (playerComputer, attack):
     playerComputer['health'] = playerComputer['health'] - attack
     attack = 0

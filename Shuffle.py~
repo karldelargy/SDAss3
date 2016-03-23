@@ -1,4 +1,4 @@
-def Shuffle(playerOne):  #shuffles cards in discard into deck
+def Shuffle(playerOne):
     for x in range(0, playerOne['handsize']):
         if len(playerOne['deck']) == 0:
             random.shuffle(playerOne['discard'])

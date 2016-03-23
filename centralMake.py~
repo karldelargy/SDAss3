@@ -1,4 +1,4 @@
-def centralMake(centralLine):  #creates the central line
+def centralMake(centralLine):
     max = centralLine['activeSize']
     count = 0
     while count < max:

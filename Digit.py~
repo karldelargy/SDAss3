@@ -19,6 +19,6 @@ def Digit (playerOne, money, attack, act): #selects the cards you chose by index
         print card
         sleep(0.5)
     print "\nYour Values"
-    print "Money %s, Attack %s" % (money, attack) #shows you where you stand in terms of attributes
+    print "Money %s, Attack %s" % (money, attack)
     sleep(0.1)
     return (playerOne, money, attack)

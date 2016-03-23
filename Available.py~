@@ -1,4 +1,4 @@
-from time import sleep   #prints central mline and suppliment option
+from time import sleep 
 def Available(centralLine):
     print "Available Cards"
     for card in centralLine['active']:
