@@ -5,13 +5,13 @@ def gameDecision(playerOne, playerComputer, centralLine, createGame):
     if playerOne['health'] <= 0:
         createGame = False
         print "Computer wins"
-        sleep(0.5)
+        #sleep(0.5)
     elif playerComputer['health'] <= 0:
         createGame = False
         print 'Player One  wins'
     elif centralLine['activeSize'] == 0:
         print "No more cards available"
-        sleep(0.5)
+        #sleep(0.5)
         if playerOne['health'] > playerComputer['health']:
             print "Player One Wins on Health"
         elif playerComputer['health'] > playerOne['health']:
